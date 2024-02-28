@@ -1,4 +1,7 @@
-;;;;; Ficheiro jogo.lisp
+;;;;; Ficheiro jogo.lisp do Projeto 2
+;;; Autor: João Quintiliano, 201900287
+;;; Curso: Licenciatura em Engenharia Informática
+;;; UC: Inteligência Artificial
 
 ;;; Código relacionado com o problema.
 
@@ -42,15 +45,6 @@ tabuleiro."
     )
 )
 
-(defun alisa (lista)
-"Devolve todos os elementos de uma lista que poderá conter sub-listas, 
-com todos os elementos agregados numa única lista principal."
-    (cond ((null lista) nil)
-          ((atom (car lista)) (cons (car lista) (alisa (cdr lista))))
-          (t (append (alisa (car lista)) (alisa (cdr lista))))
-    )
-)
-
 (defun lista-numeros (&optional (n 100))
 "Função que recebe um número positivo n e cria uma lista com todos os números
 entre 0 (inclusivé) e o número passado como argumento (exclusivé). Por default o n é 100"
@@ -68,17 +62,8 @@ entre 0 (inclusivé) e o número passado como argumento (exclusivé). Por default o
  9 8 7 6 5 4 3 2 1 0)
 )
 
-(defun remover-se(pred lista)
-"Devolve a resconstrução da lista passada como argumento sem os elementos que verificam a
-condição/predicado passado pelo argumento pred 
-exemplo: (remover-se #'(lambda (x) (= x 0)) lista) -> devolve a lista sem os átomos 0"
-    (cond ((null lista) NIL) 
-          ((funcall pred (car lista)) (remover-se pred (cdr lista)))
-          (T (cons (car lista) (remover-se pred (cdr lista))))
-    )
-)
-
 (defun numero-aleatorio (lista)
+"Função que recebe uma lista e retorna um número aleatório dessa lista"
     (cond 
         ((= (length lista) 0) 0)
         (t (nth (random (length lista)) lista))
@@ -86,6 +71,7 @@ exemplo: (remover-se #'(lambda (x) (= x 0)) lista) -> devolve a lista sem os áto
 )
 
 (defun baralhar (remover &optional (nova-lista '()) (num (numero-aleatorio remover)))
+"Função que recebe um tabuleiro e baralha esse tabuleiro"
     (cond 
         ((= (length remover) 0) nova-lista)
         (T (baralhar (remove-if #'(lambda (x) (= x num)) remover) (cons num nova-lista)))
@@ -155,6 +141,7 @@ com o simétrico do número da variável numero substituido por NIL"
 )
 
 (defun substituir-duplo (tabuleiro)
+"Recebe um tabuleiro e substitui o maior duplo do tabuleiro"
     (cond 
         ((null (maior-duplo tabuleiro)) nil)
         (t (substituir (nth 0 (procurar-posicao tabuleiro (maior-duplo tabuleiro))) (nth 1 (procurar-posicao tabuleiro (maior-duplo tabuleiro))) tabuleiro))
@@ -222,6 +209,7 @@ Devolve o tabuleiro com a nova posição do cavalo."
 )
 
 (defun operador-1 (tabuleiro jogadorMax)
+"Movimento 1 do cavalo, 2 casa para baixo e 1 para a esquerda"
     (cond 
         ((null (procurar-posicao tabuleiro (if jogadormax -1 -2))) nil)
         (t (operador 
@@ -235,6 +223,7 @@ Devolve o tabuleiro com a nova posição do cavalo."
 )
 
 (defun operador-2 (tabuleiro jogadorMax)
+"Movimento 2 do cavalo, 2 casa para baixo e 1 para a direita"
     (cond 
         ((null (procurar-posicao tabuleiro (if jogadormax -1 -2))) nil)
         (t (operador 
@@ -248,6 +237,7 @@ Devolve o tabuleiro com a nova posição do cavalo."
 )
 
 (defun operador-3 (tabuleiro jogadorMax)
+"Movimento 3 do cavalo, 2 casa para a direita e 1 para baixo"
     (cond 
         ((null (procurar-posicao tabuleiro (if jogadormax -1 -2))) nil)
         (t (operador 
@@ -261,6 +251,7 @@ Devolve o tabuleiro com a nova posição do cavalo."
 )
 
 (defun operador-4 (tabuleiro jogadorMax)
+"Movimento 4 do cavalo, 2 casa para a direita e 1 para cima"
     (cond 
         ((null (procurar-posicao tabuleiro (if jogadormax -1 -2))) nil)
         (t (operador 
@@ -274,6 +265,7 @@ Devolve o tabuleiro com a nova posição do cavalo."
 )
 
 (defun operador-5 (tabuleiro jogadorMax)
+"Movimento 5 do cavalo, 2 casa para cima e 1 para a direita"
     (cond 
         ((null (procurar-posicao tabuleiro (if jogadormax -1 -2))) nil)
         (t (operador 
@@ -287,6 +279,7 @@ Devolve o tabuleiro com a nova posição do cavalo."
 )
 
 (defun operador-6 (tabuleiro jogadorMax)
+"Movimento 6 do cavalo, 2 casa para cima e 1 para a esquerda"
     (cond 
         ((null (procurar-posicao tabuleiro (if jogadormax -1 -2))) nil)
         (t (operador 
@@ -300,6 +293,7 @@ Devolve o tabuleiro com a nova posição do cavalo."
 )
 
 (defun operador-7 (tabuleiro jogadorMax)
+"Movimento 7 do cavalo, 2 casa para a esquerda e 1 para cima"
     (cond 
         ((null (procurar-posicao tabuleiro (if jogadormax -1 -2))) nil)
         (t (operador 
@@ -313,6 +307,7 @@ Devolve o tabuleiro com a nova posição do cavalo."
 )
 
 (defun operador-8 (tabuleiro jogadorMax)
+"Movimento 8 do cavalo, 2 casa para a esquerda e 1 para baixo"
     (cond 
         ((null (procurar-posicao tabuleiro (if jogadormax -1 -2))) nil)
         (t (operador 

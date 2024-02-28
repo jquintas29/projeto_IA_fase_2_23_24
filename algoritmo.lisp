@@ -1,4 +1,7 @@
-;;;;; Ficheiro algoritmo.lisp
+;;;; Ficheiro algoritmo.lisp do Projeto 2
+;;; Autor: João Quintiliano, 201900287
+;;; Curso: Licenciatura em Engenharia Informática
+;;; UC: Inteligência Artificial
 
 ;;; Deve conter a implementação do algoritmo de jogo independente do domínio.
 

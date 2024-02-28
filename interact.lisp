@@ -1,4 +1,7 @@
-;;;;; Ficheiro interact.lisp
+;;;;; Ficheiro interact.lisp do Projeto 2
+;;; Autor: João Quintiliano, 201900287
+;;; Curso: Licenciatura em Engenharia Informática
+;;; UC: Inteligência Artificial
 
 ;;; Carrega os outros ficheiros de código, escreve e lê de ficheiros e trata da interação com o utilizador.
 
@@ -6,6 +9,7 @@
 (load "C:/Users/joaoq/OneDrive/Faculdade/Inteligencia_artificial/Projeto_IA/projeto_IA_fase_2_23_24/jogo.lisp")
 
 (defun jogar ()
+"Função de inicio de jogo."
     (let ((tipo-jogo (jogadores)) (tabuleiro (tabuleiro-aleatorio)) (profundidade (ler-profundidade)))
         (cond 
             ((equal tipo-jogo 'jogador-jogador) 
