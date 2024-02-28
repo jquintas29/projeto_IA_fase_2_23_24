@@ -16,6 +16,7 @@ Se empatarem o valor será 0."
 )
 
 (defun lista-max-value (lista &optional (no-max-value (cria-no nil 0 0 0 nil nil -9999)))
+"Permite obter de uma lista de nós o nó com o valor maior."
     (cond 
         ((null lista) no-max-value)
         ((> (no-valor (car lista)) (no-valor no-max-value)) (lista-max-value (cdr lista) (car lista)))
@@ -24,6 +25,7 @@ Se empatarem o valor será 0."
 )
 
 (defun lista-min-value (lista &optional (no-min-value (cria-no nil 0 0 0 nil nil 9999)))
+"Permite obter de uma lista de nós o nó com o valor menor."
     (cond 
         ((null lista) no-min-value)
         ((< (no-valor (car lista)) (no-valor no-min-value)) (lista-min-value (cdr lista) (car lista)))
@@ -31,7 +33,8 @@ Se empatarem o valor será 0."
     )
 )
 
-(defun quicksort (lista asc) 
+(defun quicksort (lista asc)
+"recebe uma lista de nós e devolve a lista organizada de forma ascendente ou descendente."
     (cond (asc (sort lista #'(lambda (x y) (> (no-valor x) (no-valor y)))))
           (t (sort lista #'(lambda (x y) (< (no-valor x) (no-valor y))))))
 )
@@ -44,6 +47,7 @@ Se empatarem o valor será 0."
 
 ;; Adicionar limite de tempo (get-internal-real-time)
 (defun alfabeta (no profundidade alfa beta jogadorMax)
+"Função alfabeta. Retorna o nó da melhor jogada."
     (cond 
         ((or (null (jogadas-possiveis no)) (= profundidade 0)) (avaliacao no))
         (jogadorMax

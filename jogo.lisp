@@ -328,57 +328,73 @@ Devolve o tabuleiro com a nova posição do cavalo."
 ; no do problema
 ; - tabuleiro
 ; - profundidade do nó na arvore
-; - estado do problema, número de pontos já feitos (?) 
-; - operadores
-; - pontuação objetivo
+; - pontuação do jogador max
+; - pontuação do jogador min
+; - operadores do jogador max
+; - operadores do jogador min
+; - valor do nó
+; - posição do cavalor do jogador max no tabuleiro
+; - posição do cavalor do jogador min no tabuleiro
  
 ;;; Construtor
 (defun cria-no (tabuleiro profundidade pontuacao-max pontuacao-min operadores-max operadores-min valor &optional (pos-max nil) (pos-min nil))
+"Função que cria um nó do problema"
   (list tabuleiro profundidade pontuacao-max pontuacao-min operadores-max operadores-min valor pos-max pos-min)
 )
 
 (defun no-mudar-valor (no valor)
+"Recebe um nó e um valor. Altera o valor do nó."
     (cria-no (no-tabuleiro no) (no-profundidade no) (no-pontuacao-max no) (no-pontuacao-min no) (no-operadores-max no) (no-operadores-min no) valor)
 )
 
 ;;;; Metodos seletores
 (defun no-tabuleiro (no)
+"Retorna o tabuleiro do nó"
    (nth 0 no) 
 )
 
 (defun no-profundidade (no)
+"Retorna a profundidade do nó"
     (nth 1 no)
 )
 
 (defun no-pontuacao-max (no)
+"Retorna a pontuaçãoo do jogador max do nó"
     (nth 2 no)
 )
 
 (defun no-pontuacao-min (no)
+"Retorna a pontuação do jogador min do nó"
     (nth 3 no)
 )
 
 (defun no-operadores-max (no)
+"Retorna os operadores realizados pelo jogador max no nó"
     (nth 4 no)
 )
 
 (defun no-operadores-min (no)
+"Retorna os operadores realizados pelo jogador min no nó"
     (nth 5 no)
 )
 
 (defun no-valor (no)
+"Retorna o valor do nó"
     (nth 6 no)
 )
 
 (defun no-posicao-max (no)
+"Retorna a posição do cavalo do jogador max no tabuleiro do nó"
     (nth 7 no)
 )
 
 (defun no-posicao-min (no)
+"Retorna a posição do cavalo do jogador min no tabuleiro do nó"
     (nth 8 no)
 )
 
 (defun novo-sucessor (no operador jogadorMax)
+"Recebe um no, um operador de jogo e para que jogador vai ser feito o operador. Devolve um nó-filho descendente do nó."
     (let* ((tabuleiro (funcall operador (no-tabuleiro no) jogadormax))
           (valor-celula (celula (nth 0 (procurar-posicao tabuleiro (if jogadormax -1 -2))) (nth 1 (procurar-posicao tabuleiro (if jogadormax -1 -2))) (no-tabuleiro no))))
         (cond
@@ -400,6 +416,7 @@ Devolve o tabuleiro com a nova posição do cavalo."
 )
 
 (defun sucessores (no lista-operadores jogadormax)
+"Retorna todos os sucessores do nó passado por parâmetro conforme se o jogador é o max ou min."
     (cond 
         ((null lista-operadores) nil)
         (t (cons (novo-sucessor no (car lista-operadores) jogadormax) (sucessores no (cdr lista-operadores) jogadormax)))
@@ -419,6 +436,7 @@ Devolve o tabuleiro com a nova posição do cavalo."
 )
 
 (defun converter-posicao (posicao)
+"Função que recebe uma posição do tabuleiro e converte nas coordenadas do tabuleiro (exemplo 00 = A1)"
     (list (+ (nth 0 posicao) 1) (code-char (+ (nth 1 posicao) 65)))    
 )
 
@@ -462,6 +480,7 @@ Devolve o tabuleiro com a nova posição do cavalo."
 )
 
 (defun mostrar-jogada (no)
+"Permite mostrar a informação relativa a uma jogada."
      (format t "Tabuleiro ~%")
     (print-tabuleiro (no-tabuleiro no))
     (format t " | Pontos-jogador-1: ~a~% | Pontos-jogador-2: ~a~% | posicao-max: ~a~% | posicao-min: ~a~%"

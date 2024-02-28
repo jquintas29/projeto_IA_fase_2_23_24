@@ -39,6 +39,7 @@
 )
 
 (defun jogadores ()
+"Função que permite ler do ecrã que tipo de jogadores vão jogar"
     (progn 
         (format t "Escolher jogadores: ~%")
         (format t "1- AI vs AI~%")
@@ -61,6 +62,8 @@
 )
 
 (defun primeira-melhor-jogada (tabuleiro jogador)
+"Função que permite escolher a melhor jogada dependendo se o jogador é do cavalo branco ou preto. 
+Devolve o tabuleiro com o cavalo posicionado."
     (cond 
         (jogador (substituir 0 (position (apply #'max (car tabuleiro)) (car tabuleiro)) tabuleiro -1))
         (t (substituir 9 (position (apply #'max (nth 9 tabuleiro)) (nth 9 tabuleiro)) tabuleiro -2))
@@ -68,6 +71,7 @@
 )
 
 (defun primeira-jogada (tabuleiro jogador)
+"Função que permite ao utilizador humano escolher a sua primeira jogada no tabuleiro dependendo se este é cavalo preto ou branco."
     (print-tabuleiro tabuleiro)
     (cond 
         (jogador (progn
@@ -124,6 +128,8 @@
 )
 
 (defun escolher-jogada (no jogador)
+"Permite mostrar ao jogador (cavalo branco ou preto) as jogadas que pode realizar e dentre essas escolher uma.
+Devolve o nó filho com a jogada realizada."
     (let ((jogadas (jogadas-possiveis no jogador)))
         (format t "Jogador ~d escolha uma jogada das disponiveis:~%" jogador)
         (cond 
@@ -146,6 +152,7 @@
 )
 
 (defun jogador-jogador (no jogadormax)
+"Função de jogo humano contra humano. Mostra no ecrã o nó de forma formatada quando não for possivel realizar mais jogadas."
     (cond 
         ((null (jogadas-possiveis no)) (progn (format t "Não há mais jogadas~%") (mostrar-jogada no)))
         (jogadormax                
@@ -166,6 +173,7 @@
 )
 
 (defun ai-ai (no profundidade jogadormax)
+"Função de jogo de computador contra computador. Mostra no ecrã o nó de forma formatada quando não for possivel realizar mais jogadas."
     (cond 
         ((null (jogadas-possiveis no)) (progn (format t "Não há mais jogadas~%") (mostrar-jogada no)))
         (jogadormax (ai-ai (alfabeta no profundidade -9999 9999 jogadormax) profundidade nil))
@@ -174,6 +182,7 @@
 )
 
 (defun ai-jogador (no profundidade jogadormax)
+"Função de jogo de computador contra humano. Mostra no ecrã o nó de forma formatada quando não for possível realizar mais jogadas."
     (cond 
         ((null (jogadas-possiveis no)) (progn (format t "Não há mais jogadas~%") (mostrar-jogada no)))
         (jogadormax 
